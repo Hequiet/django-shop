@@ -1,0 +1,38 @@
+{% extends 'shopapp/base.html' %}
+{% load cache %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <h1>Список доступных ссылок</h1>
+    <div>
+        <ul>
+            {% for link in links %}
+                <li>
+                    <a href="{{ link.url }}">{{ link.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} за {{ product.price }} руб.</li>
+            {% empty %}
+                No products here
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <strong>
+            You have {{ items }} cherr{{ items|pluralize:'y,ies' }}
+        </strong>
+    </div>
+
+    {% cache 100 lorem %}
+    <div>
+        {% lorem 3p random %}
+    </div>
+    {% endcache %}
+{% endblock %}

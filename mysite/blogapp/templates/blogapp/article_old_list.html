@@ -1,0 +1,29 @@
+{% extends 'blogapp/base.html' %}
+
+{% block title %}
+    Base_view
+{% endblock %}
+
+{% block body %}
+    {% for article in articles_old %}
+        <ul>
+            <li>Заголовок: {{ article.title }}
+
+                <p>Дата публикации: {{ article.pub_date }}</p>
+
+                <p>Автор: {{ article.author.name }}</p>
+
+                <p>Категория: {{ article.category.name }}</p>
+
+                <p>{% for tag in article.tags.all %}
+                    Тэг: {{ tag.name }}
+                {% empty %}
+                    Нет тегов
+                {% endfor %}</p>
+            </li>
+
+        </ul>
+
+    {% endfor %}
+
+{% endblock %}

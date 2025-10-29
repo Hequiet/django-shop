@@ -1,0 +1,33 @@
+{% extends "myauth/base.html" %}
+{% load profile_extras %}
+{% block title %}
+    Пользователь {{ user.username }}
+{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>Информация о пользователе</h2>
+
+        Username: <a href="{% url "myauth:user_detail" pk=user.pk %}">{{ user.username }}</a>
+        <ul>
+            <li>
+                Аватар: {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="Аватар">
+            {% else %}
+                <em>Аватар не загружен</em>
+            {% endif %}</li>
+            <li>Имя: {% profile_field user.first_name "Имя не указано" %}</li>
+            <li>Фамилия: {% profile_field user.last_name "Фамилия не указана" %}</li>
+            <li>E-mail: {% profile_field user.email "E-mail не указан" %}</li>
+            <li>Биография: {% profile_field user.profile.bio "Биография не указана" %}</li>
+        </ul>
+    </div>
+    <div>
+        {% if request.user.is_staff %}
+            <li><a href="{% url 'myauth:profile_update_other' pk=user.pk %}">Редактировать профиль</a></li>
+        {% endif %}
+        <a href="{% url "shopapp:users_orders" user_id=user.pk %}">Показать заказы пользователя</a>
+        <br>
+        <a href="{% url "myauth:user_list" %}">Вернуться к списку</a>
+    </div>
+{% endblock %}

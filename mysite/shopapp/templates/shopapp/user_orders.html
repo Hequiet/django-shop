@@ -1,0 +1,34 @@
+{% extends 'shopapp/base.html' %}
+{% load cache %}
+
+{% block title %}
+    {{ owner.first_name|default:owner.username }} orders
+{% endblock %}
+
+{% block body %}
+    <h2>
+    {% if orders %}
+        User <i>{{ owner.first_name|default:owner.username }}</i> has placed the following orders:
+    {% else %}
+        User <i>{{ owner.first_name|default:owner.username }}</i> doesn't have any orders yet.
+    {% endif %}
+    </h2>
+    {% cache 300 user_orders_list user %}
+        Control numb: {% now "u" %}
+        <ul>
+            {% for order in orders %}
+                <li>
+                    <div style="margin-bottom: 10px">
+                        <a href="{% url 'shopapp:order_details' pk=order.id %}">Order № {{ order.id }}</a> to
+                        address {{ order.delivery_address }}.
+                        <br>
+                        Created at {{ order.created_at }}
+                        <br>
+                        Promocode: {{ order.promocode|default:'---' }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endcache %}
+    <a href="{% url 'myauth:user_list' %}">To the list of users</a>
+{% endblock %}

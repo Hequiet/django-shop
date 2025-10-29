@@ -1,0 +1,24 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+    Редактирование профиля
+{% endblock %}
+
+{% block body %}
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+    <div>
+        <a href="{% url 'myauth:user_list' %}">
+            >Отменить редактирование
+        </a>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Заказы
+{% endblock %}
+
+{% block body %}
+    <h1>Заказы:</h1>
+    <ul>
+    {%  for order in orders %}
+        <li><a href="{% url 'shopapp:order_details' pk=order.pk%}">{{ order.pk }}</a> -
+            {{ order.user.get_full_name|default:order.user.username }}
+            заказал (
+            {% for product in order.products.all %}
+                {{ product.name }}, {{ product.price }} руб.
+            {% endfor %})
+            По адресу {{ order.delivery_address }}
+            ({{ order.created_at|date:"d.m.Y H:i" }})
+        </li>
+    {% empty %}
+        <li>
+        Продукты отсутствуют.
+        </li>
+    {% endfor %}
+    </ul>
+    
+        <div>
+    <a href="{% url 'shopapp:order_create' %}">
+        >Create order
+    </a>
+    </div>
+{% endblock %}

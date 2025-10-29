@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+</head>
+<body>
+<header>
+    <nav style="display: flex; justify-content: space-between; align-items: center; margin-left: 10px; margin-right: 10px;">
+        <div>
+            <a href="{% url 'shopapp:product_list' %}" style="margin-right: 10px; cursor: pointer">Продукты</a>
+            <a href="{% url 'shopapp:orders_list' %}" style="margin-right: 10px; cursor: pointer">Заказы</a>
+            <a href="{% url "myauth:user_list" %}">Посмотреть всех пользователей</a>
+        </div>
+        <div style="margin-left: auto; display: flex">
+            <a href="{% url 'myauth:about-me' %}" style="margin-right: 10px">Обо мне</a>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'myauth:logout' %}">
+                    {% csrf_token %}
+                    <button>Выйти</button>
+                </form>
+            {% endif %}
+        </div>
+
+    </nav>
+
+</header>
+<section>
+    {% block body %}
+
+    {% endblock %}
+</section>
+
+</body>
+</html>

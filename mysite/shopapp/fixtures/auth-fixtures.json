@@ -1,0 +1,121 @@
+[
+{
+  "model": "auth.group",
+  "pk": 1,
+  "fields": {
+    "name": "profile_manager",
+    "permissions": [
+      [
+        "view_profile",
+        "myauth",
+        "profile"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$zim76XaJruY8mklvqHW3Hl$i2AYEhz/L0i/yaPbaU1MLbQ66mqTHtaxnJnAFIuj2DA=",
+    "last_login": "2025-09-14T10:34:06.552Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-09-08T04:43:57.731Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$TJMvNw22jzzAMm6w9sf8Cs$6sYpdHB3me+Khw7R2dvYaP/ybrS9K8NJIrUUnNeSX1o=",
+    "last_login": "2025-09-14T10:34:43.000Z",
+    "is_superuser": false,
+    "username": "sam",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-09-11T11:12:15Z",
+    "groups": [],
+    "user_permissions": [
+      [
+        "add_product",
+        "shopapp",
+        "product"
+      ],
+      [
+        "change_product",
+        "shopapp",
+        "product"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$dNwRdrjfyABbjdDj8fn4rn$Ei1okK4B/hXep5QvfkLvRU4xeUp1Uah6HhBwkTPN/H8=",
+    "last_login": "2025-09-11T11:20:31.421Z",
+    "is_superuser": false,
+    "username": "john",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-09-11T11:20:30.991Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$HmwjCRjQ4WDh0MEH2VpnNO$+oxaNCfrG3QTx5IV0/lfznZatCuWyQnc+5yVn6LksUk=",
+    "last_login": "2025-09-12T10:37:03.689Z",
+    "is_superuser": false,
+    "username": "nick",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-09-11T11:27:42.337Z",
+    "groups": [
+      [
+        "profile_manager"
+      ]
+    ],
+    "user_permissions": [
+      [
+        "view_logentry",
+        "admin",
+        "logentry"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.user_groups",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "nick"
+    ],
+    "group": [
+      "profile_manager"
+    ]
+  }
+}
+]
