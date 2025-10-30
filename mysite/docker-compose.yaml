@@ -1,0 +1,47 @@
+services:
+  app:
+    container_name: app
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command:
+      - "gunicorn"
+      - "mysite.wsgi:application"
+      - "--bind"
+      - "0.0.0.0:8000"
+      - "--graceful-timeout"
+      - "5"
+    init: true
+#      - "python"
+#      - "manage.py"
+#      - "runserver"
+#      - "--noreload"
+#      - "0.0.0.0:8080"
+#    command: tail -f /dev/null
+    stop_grace_period: 5s
+    ports:
+      - "8080:8000"
+    restart: always
+    logging:
+      driver: loki
+      options:
+#        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+#        loki-url: http://loki:3100/loki/api/v1/push
+        loki-url: http://localhost:3100/loki/api/v1/push
+    volumes:
+      - ./mysite/database:/app/database
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.2.15
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - "3000:3000"
+  loki:
+    container_name: loki
+    image: grafana/loki:2.8.0
+    ports:
+      - "3100:3100"

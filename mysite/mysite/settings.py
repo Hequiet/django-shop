@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from os import getenv
+import logging.config
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL, MEDIA_URL, LOCALE_PATHS, LOGGING
 from django.urls import reverse_lazy
@@ -18,20 +20,23 @@ from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABSE_DIR = BASE_DIR / 'database'
+DATABSE_DIR.mkdir(exist_ok=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-d2q!n=7ydr6mc@uci0+2$k-0gprkw$2s7bnqjd(k9)7=dvn!vl"
+SECRET_KEY = getenv("DJANGO_SECRET_KEY", "django-insecure-d2q!n=7ydr6mc@uci0+2$k-0gprkw$2s7bnqjd(k9)7=dvn!vl")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("DJANGO_DEBUG", 1)
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
-    "127.0.0.1",
-]
+    "127.0.0.1"
+] + getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+
 INTERNAL_IPS = [
     '127.0.0.1',
 
@@ -111,7 +116,7 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DATABSE_DIR / "db.sqlite3",
     }
 }
 
@@ -169,6 +174,7 @@ LANGUAGES = [
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "uploads"
@@ -241,6 +247,7 @@ LOGFILE_COUNT = 3
 #     },
 # }
 
+LLOGLEVEL = getenv("DJANGO_LOGLEVEL", "info").upper()
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -259,7 +266,7 @@ LOGGING = {
         'handlers': [
             'console',
         ],
-        'level': 'INFO',
+        'level': LLOGLEVEL,
     },
 }
 
@@ -276,3 +283,5 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
+
